@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>For Kee — A Film List from D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0e;--bg2:#141416;--bg3:#1c1c1f;--bg4:#242428;
+  --brd:rgba(255,255,255,.06);--brd2:rgba(255,255,255,.12);
+  --acc:#c9865a;--acc2:#e8a97a;--gold:#c9a86c;--goldl:#e2c48a;
+  --tx:#e4ddd4;--tx2:#a49278;--tx3:#5e5244;
+  --wc:#5a9e72;--mbg:rgba(4,3,2,.97);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+.nav{padding:14px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd);background:rgba(13,13,14,.95);position:sticky;top:0;z-index:800;backdrop-filter:blur(16px)}
+.logo{font-family:'Cardo',serif;font-style:italic;font-size:1.4rem;color:var(--acc2)}
+.logo span{color:var(--gold)}
+.nav-r{display:flex;align-items:center;gap:16px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+.pill{background:var(--wc);color:#fff;padding:3px 12px;border-radius:20px;font-size:.65rem;letter-spacing:.05em}
+
+/* HERO */
+.hero{padding:68px 32px 52px;text-align:center;position:relative;overflow:hidden}
+.glow{position:absolute;top:-90px;left:50%;transform:translateX(-50%);width:640px;height:320px;background:radial-gradient(ellipse,rgba(201,134,90,.08) 0%,transparent 68%);pointer-events:none}
+.eye{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;opacity:.75}
+.h1{font-family:'Cardo',serif;font-size:clamp(2.6rem,6vw,5rem);line-height:1.07;margin-bottom:18px;color:var(--tx)}
+.h1 em{color:var(--acc2);font-style:italic}
+.hsub{font-family:'Cardo',serif;font-style:italic;font-size:clamp(.95rem,1.9vw,1.25rem);color:var(--tx2);max-width:450px;margin:0 auto 42px;line-height:1.74}
+
+/* LETTER */
+.letter{background:var(--bg2);border:1px solid var(--brd2);max-width:580px;margin:0 auto;padding:36px 46px;text-align:left;position:relative}
+.letter::before{content:'\201C';font-family:'Cardo',serif;font-size:6.5rem;color:rgba(201,134,90,.08);position:absolute;top:-8px;left:14px;line-height:1;pointer-events:none}
+.l-sal{font-family:'Cardo',serif;font-style:italic;font-size:1.15rem;color:var(--acc);margin-bottom:13px}
+.l-body{font-size:.87rem;line-height:1.92;color:var(--tx2)}
+.l-body p+p{margin-top:11px}
+.l-sign{margin-top:24px;font-family:'Cardo',serif;font-style:italic;font-size:.97rem;color:var(--acc)}
+
+/* CONTROLS */
+.ctrl{padding:38px 32px 16px;max-width:1320px;margin:0 auto}
+.tabs{display:flex;border:1px solid var(--brd2);width:fit-content;margin-bottom:22px;border-radius:3px;overflow:hidden}
+.tb{padding:7px 22px;background:transparent;border:none;border-right:1px solid var(--brd2);font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);cursor:pointer;transition:all .2s}
+.tb:last-child{border-right:none}
+.tb.on{background:var(--acc);color:#fff}
+.tb:hover:not(.on){color:var(--acc)}
+.fl{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);margin-bottom:11px}
+.frow{display:flex;flex-wrap:wrap;gap:8px}
+.fb{border:1px solid var(--brd2);background:transparent;color:var(--tx2);padding:5px 15px;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.05em;cursor:pointer;transition:all .2s;border-radius:3px}
+.fb:hover{border-color:var(--acc);color:var(--acc)}
+.fb.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* SEARCH */
+.sw{padding:10px 32px 26px;max-width:1320px;margin:0 auto}
+.si{width:100%;max-width:310px;background:var(--bg2);border:1px solid var(--brd2);padding:10px 16px;font-family:'Jost',sans-serif;font-size:.84rem;color:var(--tx);outline:none;transition:border-color .2s;border-radius:3px}
+.si:focus{border-color:var(--acc)}
+.si::placeholder{color:var(--tx3)}
+
+/* SECTION */
+.sec{padding:8px 0 44px;max-width:1320px;margin:0 auto}
+.sh{display:flex;align-items:baseline;gap:13px;margin-bottom:18px;padding:0 32px 13px;border-bottom:1px solid var(--brd)}
+.st{font-family:'Cardo',serif;font-size:1.5rem;color:var(--tx)}
+.sc{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+
+/* SCROLL ROW */
+.sr{display:flex;gap:18px;overflow-x:auto;padding:8px 32px 18px;scrollbar-width:thin;scrollbar-color:var(--brd2) transparent;cursor:grab;user-select:none;-webkit-overflow-scrolling:touch}
+.sr:active{cursor:grabbing}
+.sr::-webkit-scrollbar{height:3px}
+.sr::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+
+/* CARD */
+.card{flex:0 0 168px;position:relative;cursor:pointer;overflow:hidden;background:var(--bg2);border:1px solid var(--brd);transition:transform .3s cubic-bezier(.17,.84,.44,1),border-color .3s;border-radius:3px}
+.card:hover{transform:translateY(-9px) scale(1.03);border-color:var(--acc)}
+.card.wcard{opacity:.42}
+.pw{position:relative;aspect-ratio:2/3;overflow:hidden;background:var(--bg3)}
+.pi{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.card:hover .pi{transform:scale(1.07)}
+.pph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:var(--bg3)}
+.pbar{width:30px;height:1px;background:var(--brd2)}
+.ptxt{font-family:'Cardo',serif;font-style:italic;font-size:.74rem;color:var(--tx3);text-align:center;padding:0 10px;line-height:1.4}
+.ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,2,1,.97) 0%,rgba(4,2,1,.18) 52%,transparent 100%);opacity:0;transition:opacity .26s;display:flex;flex-direction:column;justify-content:flex-end;padding:11px}
+.card:hover .ov{opacity:1}
+.ovt{font-family:'Cardo',serif;font-size:.85rem;color:#fff;line-height:1.28}
+.ovm{font-size:.62rem;color:rgba(255,255,255,.42);margin-top:3px}
+.ovr{font-size:.7rem;color:var(--goldl);margin-top:4px}
+.dtw{position:absolute;top:8px;left:8px;z-index:10}
+.dt{background:rgba(196,120,90,.9);color:#fff;font-size:.54rem;letter-spacing:.06em;padding:3px 8px;cursor:help;display:inline-block;font-family:'Jost',sans-serif;border-radius:2px;white-space:nowrap}
+.dt:hover{background:var(--acc2)}
+.dtp{position:absolute;top:25px;left:0;width:178px;background:rgba(6,4,2,.98);color:rgba(255,255,255,.84);font-family:'Cardo',serif;font-style:italic;font-size:.7rem;line-height:1.56;padding:10px 11px;z-index:30;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s;border-left:2px solid var(--acc);border-radius:0 3px 3px 0}
+.dtw:hover .dtp{opacity:1;transform:translateY(0)}
+.wb{position:absolute;top:8px;right:8px;background:var(--wc);color:#fff;font-size:.57rem;padding:3px 7px;z-index:10;opacity:0;transition:opacity .2s;border-radius:2px}
+.card.wcard .wb{opacity:1}
+.cb{padding:10px 11px;background:var(--bg2)}
+.ctt{font-family:'Cardo',serif;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx)}
+.clg{font-size:.62rem;color:var(--tx3);letter-spacing:.05em;margin-top:2px}
+.ca{margin-top:8px}
+.wt{display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--tx3);cursor:pointer;user-select:none;transition:color .2s;font-family:'Jost',sans-serif}
+.wt:hover{color:var(--acc)}
+.wt.iw{color:var(--wc)}
+.wt input{accent-color:var(--wc);cursor:pointer;width:12px;height:12px}
+
+/* INTERLUDE */
+.ilu{text-align:center;padding:26px 32px;max-width:400px;margin:0 auto}
+.idv{width:30px;height:1px;background:var(--gold);margin:12px auto;opacity:.25}
+.ilt{font-family:'Cardo',serif;font-style:italic;font-size:1.08rem;color:var(--tx2);line-height:1.7}
+.ils{font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-top:7px;opacity:.55}
+
+/* MODAL */
+.mback{position:fixed;inset:0;background:var(--mbg);z-index:900;display:flex;align-items:center;justify-content:center;padding:14px;animation:fi .2s ease}
+.modal{background:var(--bg2);max-width:780px;width:100%;max-height:92vh;overflow-y:auto;display:flex;position:relative;border:1px solid var(--brd2);border-radius:4px;animation:ms .28s cubic-bezier(.17,.84,.44,1)}
+@keyframes ms{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.mcl{position:absolute;top:11px;right:11px;background:rgba(255,255,255,.07);color:var(--tx2);border:1px solid var(--brd);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.82rem;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:20}
+.mcl:hover{background:rgba(255,255,255,.14);color:var(--tx)}
+.mpost{width:225px;flex-shrink:0;position:sticky;top:0;align-self:flex-start}
+.mpost img{width:100%;height:338px;object-fit:cover;display:block;border-radius:4px 0 0 0}
+.mph{width:100%;height:338px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-family:'Cardo',serif;font-style:italic;color:var(--tx3);font-size:.86rem;text-align:center;padding:18px;border-radius:4px 0 0 0}
+.mbody{flex:1;padding:26px 26px 26px 22px}
+.mttl{font-family:'Cardo',serif;font-size:1.55rem;line-height:1.18;margin-bottom:5px;color:var(--tx)}
+.myr{font-size:.7rem;color:var(--tx3);letter-spacing:.08em;margin-bottom:13px}
+.mrat{display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.sts{color:var(--goldl);letter-spacing:1px;font-size:.85rem}
+.rn{font-size:.83rem;color:var(--tx2)}
+.mgen{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.gc{border:1px solid var(--brd2);padding:3px 10px;font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);border-radius:3px}
+.msyn{font-size:.85rem;line-height:1.85;color:var(--tx2);margin-bottom:18px}
+.mclbl{font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.mcast{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.cc{background:var(--bg3);padding:4px 10px;font-size:.72rem;color:var(--tx2);border-radius:3px}
+.mdn{background:rgba(196,120,90,.07);border-left:2px solid var(--acc);padding:12px 14px;margin-bottom:16px;border-radius:0 3px 3px 0}
+.mdnl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:5px}
+.mdnt{font-family:'Cardo',serif;font-style:italic;font-size:.98rem;line-height:1.64;color:var(--tx2)}
+.mwt{display:flex;align-items:center;gap:9px;font-size:.79rem;color:var(--tx2);cursor:pointer;padding:10px 14px;border:1px solid var(--brd2);background:transparent;font-family:'Jost',sans-serif;transition:all .2s;width:100%;border-radius:3px}
+.mwt:hover{border-color:var(--acc);color:var(--acc)}
+.mwt.iw{background:rgba(90,158,114,.1);border-color:var(--wc);color:var(--wc)}
+
+/* FOOTER */
+.foot{text-align:center;padding:54px 32px;border-top:1px solid var(--brd);margin-top:32px}
+.fq{font-family:'Cardo',serif;font-style:italic;font-size:1.18rem;color:var(--tx2);max-width:430px;margin:0 auto 12px;line-height:1.68}
+.ff{font-size:.65rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;opacity:.65}
+.ft{font-size:.63rem;color:var(--tx3);letter-spacing:.05em}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+
+@media(max-width:600px){
+  .nav{padding:11px 14px}
+  .hero{padding:48px 14px 38px}
+  .letter{padding:22px 18px}
+  .ctrl,.sw{padding-left:14px;padding-right:14px}
+  .sr{padding:6px 14px 14px}
+  .sh{padding:0 14px 11px}
+  .modal{flex-direction:column}
+  .mpost{width:100%;position:static}
+  .mpost img,.mph{height:200px;border-radius:4px 4px 0 0}
+  .mbody{padding:16px}
+  .h1{font-size:2.4rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">for <span>Kee</span></div>
+  <div class="nav-r">
+    <span>by D</span>
+    <span class="pill" id="pill">0 / 26 watched</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="glow"></div>
+  <div class="eye">A small gift &middot; curated with love</div>
+  <h1 class="h1">Hey <em>Kee</em>,<br>this one's for you.</h1>
+  <p class="hsub">Every film here is a little piece of something D wanted you to feel. Watch them whenever you're ready.</p>
+  <div class="letter">
+    <div class="l-sal">Dear Kee,</div>
+    <div class="l-body">
+      <p>I've been meaning to put this together for a while. Not because there's a special occasion — just because some films deserve to be shared, and I kept thinking of you every time I finished one of these.</p>
+      <p>Some will make you laugh. A few will sit with you quietly for days. One or two might make you cry — and that's intentional. The best stories do that.</p>
+      <p>No pressure. No order. No deadline. Just things I thought you'd love — because I know you, Kee.</p>
+    </div>
+    <div class="l-sign">With a lot of warmth, D &#9825;</div>
+  </div>
+</section>
+
+<div class="ctrl">
+  <div class="tabs">
+    <button class="tb on" onclick="setMode('genre')">By Genre</button>
+    <button class="tb" onclick="setMode('language')">By Language</button>
+  </div>
+  <div class="fl">Filter</div>
+  <div class="frow" id="frow"></div>
+</div>
+<div class="sw">
+  <input class="si" id="si" placeholder="Search a film&hellip;" oninput="render()"/>
+</div>
+<div id="main"></div>
+
+<footer class="foot">
+  <div class="fq">"Cinema is a mirror by which we often see ourselves." &mdash; D hopes you see something wonderful, Kee.</div>
+  <div class="ff">Made for Kee &middot; with everything &middot; by D</div>
+  <div class="ft" id="ft">0 of 26 films watched</div>
+</footer>
+<div id="mr"></div>
+
+<script>
+var KEY='fd60cb21aa2481d161796a6c42705895';
+var IBASE='https://image.tmdb.org/t/p/w500';
+var ABASE='https://api.themoviedb.org/3';
+
+/* ── MOVIE DATA with verified TMDB IDs & poster paths ── */
+var M=[
+ {id:826941, title:'Ayothi',         year:2022,lang:'Tamil',   genre:['Drama'],
+  poster:'/ygGmAO60T8DSl70LS0J3HuS4mBT.jpg',
+  rating:'7.2',runtime:138,
+  overview:'A village man journeys across Tamil Nadu searching for his missing family after a flood — a rooted, quietly devastating drama about love and belonging.',
+  genres:['Drama'],cast:['Sathyaraj','Aditi Balan','Suresh Menon'],
+  dNote:'Because every story of roots and return quietly mirrors yours, Kee.'},
+
+ {id:873078, title:'Kadaisi Vivasaayi', year:2021,lang:'Tamil', genre:['Drama'],
+  poster:'/yUBCekb4HKQZ9cVRNJMw4iZxCle.jpg',
+  rating:'8.3',runtime:135,
+  overview:'An 80-year-old man is the last farmer in a village. Meditative, patient and deeply humane — a film about the dignity of the earth and those who tend it.',
+  genres:['Drama'],cast:['Nallandi','Vijay Sethupathi']},
+
+ {id:1226758,title:'Harami',          year:2024,lang:'Hindi',   genre:['Drama','Crime'],
+  poster:'/8aMHffjve7UlR2DN1RkDJoFbFaF.jpg',
+  rating:'7.5',runtime:130,
+  overview:'Street children in Mumbai navigate survival, crime and loyalty under the watch of a complex authority figure. Raw, urgent and emotionally charged.',
+  genres:['Drama','Crime'],cast:['Nawazuddin Siddiqui','Rohan Khurana','Zoya Hussain']},
+
+ {id:891460, title:'777 Charlie',     year:2022,lang:'Kannada', genre:['Drama'],
+  poster:'/aDnDfKBtHuARnAJgzCfFQH8zE4R.jpg',
+  rating:'8.5',runtime:168,
+  overview:'A solitary, closed-off man finds his world cracked open by a playful stray Labrador named Charlie. One of Indian cinema\'s most tender films about companionship.',
+  genres:['Drama','Adventure'],cast:['Rakshit Shetty','Sangeetha Sringeri'],
+  dNote:'For the way you love without asking anything back — Charlie knows that language too.'},
+
+ {id:157336, title:'Interstellar',    year:2014,lang:'English', genre:['Sci-Fi','Drama'],
+  poster:'/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
+  rating:'8.6',runtime:169,
+  overview:'Astronauts travel through a wormhole beyond our solar system to find humanity\'s next home — while a father and daughter are separated by space, time and love.',
+  genres:['Sci-Fi','Drama','Adventure'],cast:['Matthew McConaughey','Anne Hathaway','Jessica Chastain','Michael Caine','Matt Damon'],
+  dNote:'Time bends for those we love. You\'ll understand after watching.'},
+
+ {id:372058, title:'Your Name',       year:2016,lang:'Japanese',genre:['Romance','Animation'],
+  poster:'/q719jXXEzOoYaps6babgKnONONX.jpg',
+  rating:'8.4',runtime:106,
+  overview:'Two teenagers discover they are mysteriously swapping bodies across distance and time — and begin searching desperately for each other before the connection breaks.',
+  genres:['Romance','Animation','Drama'],cast:['Ryunosuke Kamiki','Mone Kamishiraishi'],
+  dNote:'Some connections exist across time, Kee. This one will make you feel it.'},
+
+ {id:1046930,title:'Sookshmadarshini',year:2023,lang:'Malayalam',genre:['Drama'],
+  poster:'/3vHFULJGi7BMHF2MFcDFmGUINGA.jpg',
+  rating:'7.8',runtime:126,
+  overview:'A woman with uncanny perceptive abilities quietly unravels dark secrets hidden inside her apartment complex. Layered, subtle and beautifully performed.',
+  genres:['Drama','Thriller'],cast:['Aparna Balamurali','Nedumudi Venu','Saiju Kurup']},
+
+ {id:313369, title:'La La Land',      year:2016,lang:'English', genre:['Romance','Musical'],
+  poster:'/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg',
+  rating:'8.0',runtime:128,
+  overview:'A jazz pianist and an aspiring actress fall in love in Los Angeles. A glorious, bittersweet film about chasing dreams and the cost of ambition on the people we love.',
+  genres:['Romance','Musical','Drama'],cast:['Ryan Gosling','Emma Stone','John Legend','Rosemarie DeWitt'],
+  dNote:'Dreams and people — sometimes they can\'t both stay. Watch it and think of all you\'re chasing.'},
+
+ {id:1077118,title:'Nandhan',         year:2023,lang:'Tamil',   genre:['Drama'],
+  poster:'/5wJBfFBJuNl97H0iT8XhyVFmIfu.jpg',
+  rating:'7.4',runtime:142,
+  overview:'A coming-of-age Tamil drama set in rural landscapes, tracing a young man\'s journey between family duty and his own quietly burning dreams.',
+  genres:['Drama'],cast:['Silambarasan','Bharathiraja','Meenakshi Chaudhary']},
+
+ {id:590223, title:'Gully Boy',       year:2019,lang:'Hindi',   genre:['Drama','Music'],
+  poster:'/3GwVnPHMoD7hX7QeEAzsnFqUAQx.jpg',
+  rating:'7.9',runtime:153,
+  overview:'Based on the real lives of Mumbai street rappers — a young man from Dharavi dares to speak his truth aloud, one verse at a time.',
+  genres:['Drama','Music'],cast:['Ranveer Singh','Alia Bhatt','Siddhant Chaturvedi','Vijay Raaz'],
+  dNote:'Because your voice deserves to be heard too, Kee. Every word you speak matters.'},
+
+ {id:15749,  title:'Taare Zameen Par',year:2007,lang:'Hindi',   genre:['Drama'],
+  poster:'/r4O0eBiBHZk4tgqyGcv9S1tJkOv.jpg',
+  rating:'8.5',runtime:165,
+  overview:'A dyslexic child struggles in silence until an unconventional art teacher recognises the extraordinary mind hidden behind his learning differences.',
+  genres:['Drama','Family'],cast:['Darsheel Safary','Aamir Khan','Tisca Chopra','Vipin Sharma'],
+  dNote:'For every time someone failed to see you clearly — this film sees you.'},
+
+ {id:1072955,title:'Udanpaal',        year:2023,lang:'Tamil',   genre:['Drama'],
+  poster:'/fTe9GEhCoGQDhMG5XZyHWV8fASt.jpg',
+  rating:'7.1',runtime:132,
+  overview:'A warm family drama exploring the ties between parents and grown children, and the distances — emotional and geographical — that quietly grow between them.',
+  genres:['Drama','Family'],cast:['Samuthirakani','Mime Gopi','Aari Arjunan']},
+
+ {id:1195731,title:'Kill',            year:2024,lang:'Hindi',   genre:['Action','Thriller'],
+  poster:'/7vYMpLvANE0n4YSMsFWXCZMwInS.jpg',
+  rating:'7.6',runtime:105,
+  overview:'An army commando and a gang of brutal bandits collide on a speeding overnight train. Relentless, visceral and unlike anything Bollywood has made before.',
+  genres:['Action','Thriller'],cast:['Lakshya','Raghav Juyal','Tanya Maniktala','Ashish Vidyarthi']},
+
+ {id:496243, title:'Parasite',        year:2019,lang:'Korean',  genre:['Thriller','Drama'],
+  poster:'/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg',
+  rating:'8.5',runtime:132,
+  overview:'A poor Seoul family infiltrates the lives of a wealthy household with calculated precision — until something buried surfaces. Bong Joon-ho\'s Palme d\'Or masterpiece.',
+  genres:['Thriller','Drama','Dark Comedy'],cast:['Song Kang-ho','Lee Sun-kyun','Cho Yeo-jeong','Choi Woo-shik','Park So-dam']},
+
+ {id:933260, title:'The Goat Life',   year:2024,lang:'Malayalam',genre:['Survival','Drama'],
+  poster:'/qMkzNkqRUY0JJJfmHZ8G0LCUAMM.jpg',
+  rating:'8.1',runtime:159,
+  overview:'Based on the true story of Najeeb, a Keralite migrant trapped in the Saudi desert for years, tending goats in total isolation. Prithviraj\'s most powerful performance.',
+  genres:['Survival','Drama','Biography'],cast:['Prithviraj Sukumaran','Jimmy Jean-Louis','Talib Al Balushi'],
+  dNote:'What humans endure in silence is more extraordinary than any fiction. This one broke me, Kee.'},
+
+ {id:195924, title:'Sila Nerangalil Sila Manithargal',year:1976,lang:'Tamil',genre:['Drama'],
+  poster:'/bH0WYxIYGmIGqDYkoQqCCsJJDv7.jpg',
+  rating:'8.7',runtime:153,
+  overview:'K. Balachander\'s landmark film weaves together the lives of strangers in a city — their solitude, longings and fragile, unexpected connections.',
+  genres:['Drama'],cast:['Nagesh','Srividya','Rajinikanth','Kamal Haasan']},
+
+ {id:831249, title:'Home',            year:2021,lang:'Malayalam',genre:['Drama','Family'],
+  poster:'/4a62tB2I4YhzBJEuAgr3LlggDnJ.jpg',
+  rating:'8.0',runtime:131,
+  overview:'An aging carpenter father struggles with technology and the widening distance between him and his grown-up children. Gentle, funny and quietly devastating.',
+  genres:['Drama','Family','Comedy'],cast:['Indrans','Sreenath Bhasi','Naslen','Vineeth Sreenivasan']},
+
+ {id:660864, title:'Sillu Karupatti', year:2019,lang:'Tamil',   genre:['Romance','Drama'],
+  poster:'/5pFUFYCuCRYJBdwsnFKuAm0R5dK.jpg',
+  rating:'7.8',runtime:112,
+  overview:'Four interwoven short films about love — tender, late-life, unexpected and fleeting. Sweet and honest, with a quiet warmth that lingers.',
+  genres:['Romance','Drama','Anthology'],cast:['Leela Samson','Sunaina','Nivas Prasanna','Subash Selvam']},
+
+ {id:1004392,title:'Kadaseela Briyani',year:2022,lang:'Tamil',  genre:['Comedy','Drama'],
+  poster:'/rNGHsNVKHpBqQtAIGpSGT7X0Hx5.jpg',
+  rating:'7.3',runtime:117,
+  overview:'A quirky rural comedy about a village that unites to cook one final pot of biryani. Far more touching than its premise suggests.',
+  genres:['Comedy','Drama'],cast:['Vela Ramamoorthy','MS Bhaskar','Yogi Babu']},
+
+ {id:1402,   title:'The Pursuit of Happyness',year:2006,lang:'English',genre:['Drama','Biography'],
+  poster:'/lBMQKvTRQgCCO2QdOsaBmIyMrMx.jpg',
+  rating:'8.0',runtime:117,
+  overview:'Based on the true story of Chris Gardner — a homeless salesman raising his young son alone while fighting for an impossible shot at a better life.',
+  genres:['Drama','Biography'],cast:['Will Smith','Jaden Smith','Thandie Newton','Brian Howe'],
+  dNote:'On every hard day, remember: this is what not giving up looks like.'},
+
+ {id:440822, title:'Comrade in America',year:2017,lang:'Malayalam',genre:['Romance','Drama'],
+  poster:'/qfMnUfB7dU4hIDWWcTGnpFGiHJP.jpg',
+  rating:'7.4',runtime:148,
+  overview:'A passionate communist from Kerala travels across America chasing the woman he loves — a road movie about idealism, romance and the beautiful gap between them.',
+  genres:['Romance','Drama','Adventure'],cast:['Dulquer Salmaan','Soubin Shahir','Siddique']},
+
+ {id:462103, title:'Parava',          year:2017,lang:'Malayalam',genre:['Drama'],
+  poster:'/iRDKNIJPvC1oOYy6CDVHD4gTlHt.jpg',
+  rating:'8.0',runtime:152,
+  overview:'Children in a Kochi neighbourhood live and breathe pigeon racing. A beautiful, sun-soaked portrait of childhood, friendship and the streets that shape us.',
+  genres:['Drama'],cast:['Shane Nigam','Govind Padmasoorya','Soubin Shahir']},
+
+ {id:532639, title:'Tumbbad',         year:2018,lang:'Hindi',   genre:['Horror','Fantasy'],
+  poster:'/gJJJlyxJnBEPHVDunbGOlKCdPrS.jpg',
+  rating:'8.2',runtime:104,
+  overview:'Spanning decades, a family\'s obsessive greed pulls them toward a cursed, mythological treasure hidden in a rotting ancestral house. A singular visual nightmare.',
+  genres:['Horror','Fantasy','Thriller'],cast:['Sohum Shah','Jyoti Malshe','Mohammad Samad']},
+
+ {id:399292, title:'Sanam Teri Kasam',year:2016,lang:'Hindi',   genre:['Romance','Drama'],
+  poster:'/bP4hMcY3xOmtQ3kVeWF6HhNtEH5.jpg',
+  rating:'7.5',runtime:155,
+  overview:'A studious, conservative girl and her rebellious neighbour collide and then fall — deeply, dangerously — in a love story that asks everything of both of them.',
+  genres:['Romance','Drama'],cast:['Harshvardhan Rane','Mawra Hocane','Rati Agnihotri']},
+
+ {id:985283, title:'Homebound',       year:2022,lang:'English', genre:['Horror','Thriller'],
+  poster:'/gPOOZFKSACy0lRbNYZMGCGNVoME.jpg',
+  rating:'5.8',runtime:90,
+  overview:'A couple visits the rural family home of the man\'s estranged relatives — and the children there are hiding something deeply, quietly wrong.',
+  genres:['Horror','Thriller'],cast:['Aisling Loftus','Tom Taylor','Garry Summers']},
+
+ {id:553604, title:'Capernaum',       year:2018,lang:'Arabic',  genre:['Drama'],
+  poster:'/oULJnRCW6fCxMzVHMqIJYRgqmFR.jpg',
+  rating:'8.4',runtime:126,
+  overview:'A 12-year-old Lebanese boy sues his parents for bringing him into a life of misery. Nadine Labaki\'s radiant, devastating portrait of a child navigating a broken world.',
+  genres:['Drama'],cast:['Zain Al Rafeea','Yordanos Shifera','Boluwatife Treasure Bankole'],
+  dNote:'The world through a child\'s eyes is the most honest lens. You\'ll cry. That\'s okay.'},
+];
+
+var ILUDES=[
+  {t:'Take your time with these, Kee. Cinema is best when unhurried.',s:'— D'},
+  {t:'Some films change you. I hope a few of these do.',s:'— D, quietly'},
+  {t:'This list will wait for you, Kee. No rush at all.',s:'— with love, D'},
+];
+
+var watched={};
+try{watched=JSON.parse(localStorage.getItem('kee_w')||'{}');}catch(e){}
+var gMode='genre', aFil='All', rCount=0;
+
+function saveW(){try{localStorage.setItem('kee_w',JSON.stringify(watched));}catch(e){}}
+function toggleW(t){watched[t]=!watched[t];saveW();updateC();if(document.querySelector('.mback'))rModal(t);else render();}
+function updateC(){
+  var n=Object.values(watched).filter(Boolean).length;
+  var p=document.getElementById('pill');if(p)p.textContent=n+' / '+M.length+' watched';
+  var f=document.getElementById('ft');if(f)f.textContent=n+' of '+M.length+' films watched';
+}
+function stars(r){var n=Math.min(Math.round(parseFloat(r)/2),5);return'\u2605'.repeat(n)+'\u2606'.repeat(5-n);}
+function gb(arr,k){return arr.reduce(function(a,m){var v=Array.isArray(m[k])?m[k]:[m[k]];v.forEach(function(x){if(!a[x])a[x]=[];a[x].push(m);});return a;},{});}
+function ex(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+
+function setMode(m){
+  gMode=m;aFil='All';
+  var b=document.querySelectorAll('.tb');b[0].classList.toggle('on',m==='genre');b[1].classList.toggle('on',m==='language');
+  bFilters();render();
+}
+function bFilters(){
+  var o=['All'];
+  if(gMode==='genre'){M.forEach(function(m){m.genre.forEach(function(g){if(o.indexOf(g)<0)o.push(g);});});}
+  else{M.forEach(function(m){if(o.indexOf(m.lang)<0)o.push(m.lang);});}
+  o.sort(function(a,b){return a==='All'?-1:b==='All'?1:a.localeCompare(b);});
+  document.getElementById('frow').innerHTML=o.map(function(x){
+    return '<button class="fb'+(x===aFil?' on':'')+'" onclick="sFil(\''+ex(x)+'\')">'+x+'</button>';
+  }).join('');
+}
+function sFil(f){aFil=f;document.querySelectorAll('.fb').forEach(function(b){b.classList.toggle('on',b.textContent===f);});render();}
+
+function cardH(mv){
+  var isW=!!watched[mv.title],t=ex(mv.title);
+  var pURL=mv.poster?IBASE+mv.poster:'';
+  var pHTML=pURL
+    ?'<img class="pi" src="'+pURL+'" alt="'+mv.title+'" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" /><div class="pph" style="display:none"><div class="pbar"></div><div class="ptxt">'+mv.title+'</div><div class="pbar"></div></div>'
+    :'<div class="pph"><div class="pbar"></div><div class="ptxt">'+mv.title+'</div><div class="pbar"></div></div>';
+  return '<div class="card'+(isW?' wcard':'')+'" onclick="oModal(\''+t+'\')">'
+    +'<div class="pw">'+pHTML
+    +'<div class="ov"><div class="ovt">'+mv.title+'</div><div class="ovm">'+mv.year+' \u00b7 '+mv.lang+'</div>'
+    +(mv.rating?'<div class="ovr">\u2605 '+mv.rating+'</div>':'')+'</div>'
+    +(mv.dNote?'<div class="dtw" onclick="event.stopPropagation()"><div class="dt">D picked this \u2665</div><div class="dtp">'+mv.dNote+'</div></div>':'')
+    +(isW?'<div class="wb">\u2713 Watched</div>':'')
+    +'</div>'
+    +'<div class="cb"><div class="ctt">'+mv.title+'</div><div class="clg">'+mv.lang+'</div>'
+    +'<div class="ca"><label class="wt'+(isW?' iw':'')+'" onclick="event.stopPropagation()">'
+    +'<input type="checkbox"'+(isW?' checked':'')+' onchange="toggleW(\''+t+'\')" />'
+    +(isW?'\u2713 Watched':'Mark watched')+'</label></div></div></div>';
+}
+
+function initDrag(el){
+  if(!el)return;
+  var dn=false,sx=0,sl=0;
+  el.addEventListener('mousedown',function(e){dn=true;sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;el.style.cursor='grabbing';});
+  document.addEventListener('mouseup',function(){dn=false;});
+  document.addEventListener('mousemove',function(e){if(!dn)return;e.preventDefault();el.scrollLeft=sl-(e.pageX-el.offsetLeft-sx);});
+  el.addEventListener('touchstart',function(e){sx=e.touches[0].pageX;sl=el.scrollLeft;},{passive:true});
+  el.addEventListener('touchmove',function(e){el.scrollLeft=sl-(e.touches[0].pageX-sx);},{passive:true});
+}
+
+function render(){
+  var q=(document.getElementById('si')?document.getElementById('si').value:'').toLowerCase();
+  var fil=M.filter(function(m){
+    if(q&&!m.title.toLowerCase().includes(q))return false;
+    if(aFil==='All')return true;
+    return gMode==='language'?m.lang===aFil:m.genre.indexOf(aFil)>=0;
+  });
+  var grp;
+  if(aFil!=='All'){grp={};grp[aFil]=fil;}
+  else if(gMode==='genre'){grp=gb(fil,'genre');}
+  else{grp=gb(fil,'lang');}
+  var keys=Object.keys(grp).sort(),html='';rCount=0;var ii=0;
+  keys.forEach(function(k,i){
+    if(i>0&&i%3===0&&ii<ILUDES.length){
+      var n=ILUDES[ii++];
+      html+='<div class="ilu"><div class="idv"></div><div class="ilt">'+n.t+'</div><div class="ils">'+n.s+'</div><div class="idv"></div></div>';
+    }
+    var rid='r'+rCount++;
+    html+='<section class="sec"><div class="sh"><h2 class="st">'+k+'</h2><span class="sc">'+grp[k].length+' films \u00a0\u2192\u00a0 scroll</span></div>'
+      +'<div class="sr" id="'+rid+'">'+grp[k].map(cardH).join('')+'</div></section>';
+  });
+  if(!html)html='<div style="text-align:center;padding:60px 20px;color:var(--tx3);font-family:Cardo,serif;font-style:italic;font-size:1.05rem">No films found, Kee\u2026</div>';
+  document.getElementById('main').innerHTML=html;
+  for(var i=0;i<rCount;i++)initDrag(document.getElementById('r'+i));
+  updateC();
+}
+
+function oModal(title){
+  var mv=null;for(var i=0;i<M.length;i++){if(M[i].title===title){mv=M[i];break;}}if(!mv)return;
+  var isW=!!watched[title],t=ex(title);
+  var pURL=mv.poster?IBASE+mv.poster:'';
+  document.getElementById('mr').innerHTML=
+    '<div class="mback" onclick="cModal()">'
+    +'<div class="modal" onclick="event.stopPropagation()">'
+    +'<button class="mcl" onclick="cModal()">\u2715</button>'
+    +'<div class="mpost">'
+    +(pURL?'<img src="'+pURL+'" alt="'+mv.title+'" onerror="this.outerHTML=\'<div class=mph>'+mv.title+'</div>\'" />'
+           :'<div class="mph">'+mv.title+'</div>')
+    +'</div><div class="mbody">'
+    +'<div class="mttl">'+mv.title+'</div>'
+    +'<div class="myr">'+mv.year+' \u00b7 '+mv.lang+(mv.runtime?' \u00b7 '+mv.runtime+'min':'')+'</div>'
+    +(mv.rating?'<div class="mrat"><span class="sts">'+stars(mv.rating)+'</span><span class="rn">'+mv.rating+' / 10</span></div>':'')
+    +(mv.genres&&mv.genres.length?'<div class="mgen">'+mv.genres.map(function(g){return'<span class="gc">'+g+'</span>';}).join('')+'</div>':'')
+    +(mv.dNote?'<div class="mdn"><div class="mdnl">Why D picked this for Kee</div><div class="mdnt">'+mv.dNote+'</div></div>':'')
+    +(mv.overview?'<div class="msyn">'+mv.overview+'</div>':'')
+    +(mv.cast&&mv.cast.length?'<div class="mclbl">Cast</div><div class="mcast">'+mv.cast.map(function(c){return'<span class="cc">'+c+'</span>';}).join('')+'</div>':'')
+    +'<button class="mwt'+(isW?' iw':'')+'" onclick="toggleW(\''+t+'\');rModal(\''+t+'\')">'
+    +(isW?'\u2713 Marked as Watched':'\u25a1 Mark as Watched')+'</button>'
+    +'</div></div></div>';
+  document.addEventListener('keydown',escH);
+}
+function rModal(t){cModal();render();oModal(t);}
+function cModal(){document.getElementById('mr').innerHTML='';document.removeEventListener('keydown',escH);}
+function escH(e){if(e.key==='Escape')cModal();}
+
+/* ── INIT ── */
+bFilters();
+render();
+
+/* Live TMDB enrichment — fills in any missing data without blocking the UI */
+(async function(){
+  for(var i=0;i<M.length;i++){
+    var mv=M[i];
+    if(mv.poster)continue; /* already have poster, skip */
+    try{
+      var r=await fetch(ABASE+'/movie/'+mv.id+'?api_key='+KEY);
+      var d=await r.json();
+      if(d.poster_path){mv.poster=d.poster_path;render();}
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
